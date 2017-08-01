@@ -1,20 +1,31 @@
 import React from 'react';
 import { Text, Button, View, TextInput, Dimensions } from 'react-native';
 import request from 'superagent';
-import { rootURL } from '../helper';
+import { rootURL, save, load, storage } from '../helpers';
+import { store } from '../reducers';
 
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { error: null };
+    this.state = {
+      error: null,
+      email: '',
+      password: '',
+    };
     this.login = this.login.bind(this);
   }
 
-  login() {
-    const email = this.refs.email._lastNativeText;
-    const password = this.refs.password._lastNativeText;
+  componentWillMount() {
+    load();
+  }
 
-    if (email.length > 1 && password.length > 1) {
+  login() {
+    if (this.state.email.length > 1 &&
+       this.state.password.length > 1) {
+
+      const email = this.state.email;
+      const password = this.state.password;
+
       const pac = { email, password };
 
       request
@@ -33,6 +44,9 @@ export default class Login extends React.Component {
             // localStorage.setItem('user', res.body.user);
             // localStorage.setItem('userId', res.body.userId);
             // this.props.history.push('/');
+            this.setState({ error: null });
+            save(res.body.user, res.body.userId);
+            store.dispatch({ type: 'AUTH' });
           }
         });
     }
@@ -42,11 +56,21 @@ export default class Login extends React.Component {
     return (
       <View style={styles.view}>
       <Text style={styles.headerText}>Login</Text>
+      {this.state.error &&
+        <Text>{this.state.error}</Text>
+      }
       <TextInput
-        ref="email"
+        onChangeText={(email)=> {
+          this.setState({ email });
+        }}
+
         placeholder="Email"
         style={styles.TextInput}/>
       <TextInput
+        onChangeText={(password)=> {
+          this.setState({ password });
+        }}
+
         ref="password"
         placeholder="Password"
         style={styles.TextInput}/>
