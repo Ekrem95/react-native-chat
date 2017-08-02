@@ -39,7 +39,13 @@ export default class Home extends React.Component {
           if (res.body !== null) {
             this.setState({ messages: res.body });
           }
+        })
+        .catch(err => {
+          console.log(err);
         });
+    })
+    .catch(err => {
+      console.log(err);
     });
 
   }
@@ -52,6 +58,9 @@ export default class Home extends React.Component {
         .get(rootURL + `api/search-users/${name}`)
         .then(res => {
           this.setState({ users: res.body });
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   }
@@ -68,7 +77,14 @@ export default class Home extends React.Component {
                 <TouchableOpacity
                   key={user.id}
                   onPress={() => {
-                  this.props.navigation.navigate('Messages', { id: user.id });}}>
+                    this.props.navigation.navigate(
+                      'Messages', {
+                        id: user.id,
+                        name: this.state.user,
+                        with: user.username,
+                      });
+                  }
+                  }>
 
                 <View style={styles.card}>
                 <Text
@@ -115,7 +131,14 @@ export default class Home extends React.Component {
                <TouchableOpacity
                  key={m.id}
                  onPress={() => {
-                  this.props.navigation.navigate('Messages', { id: m.id });}}>
+                    this.props.navigation.navigate(
+                      'Messages', {
+                        id: m.id,
+                        name: this.state.user,
+                        with: m.username,
+                      });
+                  }
+                  }>
 
               <View
                 style={styles.card}>

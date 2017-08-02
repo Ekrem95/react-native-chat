@@ -38,7 +38,7 @@ const Inside = StackNavigator({
     navigationOptions: navOptions,
   },
   Messages: {
-    path: 'messages/',
+    path: 'messages/:name',
     screen: Messages,
     navigationOptions: navOptions,
   },
