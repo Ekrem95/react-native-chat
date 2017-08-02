@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, ScrollView, Dimensions } from 'react-native';
 import request from 'superagent';
 import io from 'socket.io-client';
 import { rootURL } from '../helpers';
@@ -7,6 +7,9 @@ import { rootURL } from '../helpers';
 export default class Messages extends React.Component {
   constructor(props) {
     super(props);
+    console.ignoredYellowBox = [
+         'Setting a timer',
+     ];
     this.state = {};
     this.sendMessage = this.sendMessage.bind(this);
     this.get = this.get.bind(this);
@@ -17,23 +20,20 @@ export default class Messages extends React.Component {
   }
 
   componentWillMount() {
-    // if (localStorage.getItem('user') === null) {
-    //   this.props.history.push('/login');
-    //   return;
-    // }
     const user = this.user;
     this.setState({ user });
 
     this.get();
   }
 
-  // componentDidUpdate() {
-  //   if (this.state.sendTo && this.state.user && this.state.messages) {
-  //     this.io();
-  //   }
-  //
-  //   window.scrollTo(0, document.body.scrollHeight);
-  // }
+  componentDidUpdate() {
+    // if (this.state.sendTo && this.state.user && this.state.messages) {
+    this.io();
+    // }
+
+    // const { height } = Dimensions.get('window');
+    // this.refs.scrollView.scrollTo({ y: height });
+  }
 
   getMessages(username) {
     request
@@ -50,7 +50,8 @@ export default class Messages extends React.Component {
   }
 
   io() {
-    let socket = io.connect(rootURL + '/');
+    let socket = io.connect(rootURL);
+    // socket.heartbeatTimeout = 60000;
 
     if (socket !== undefined) {
 
@@ -76,61 +77,114 @@ export default class Messages extends React.Component {
   }
 
   sendMessage() {
-    // const message = this.refs.message.value;
-    // const from = this.state.user;
-    // const to = this.state.sendTo;
-    //
-    // const pac = { message, from, to };
-    //
-    // request
-    //   .post(rootURL + 'api/messages/' + this.state.username)
-    //   .type('form')
-    //   .send(pac)
-    //   .set('Accept', 'application/json')
-    //   .end(function (err, res) {
-    //     if (err) {
-    //       console.log(err);
-    //     }
-    //   });
-    //
-    // let socket = io.connect('/');
-    //
-    // if (socket !== undefined) {
-    //   socket.emit('message', pac);
-    // }
-    //
-    // const messages = this.state.messages;
-    // messages.push(pac);
-    // this.setState(messages);
+    const message = this.state.message;
+    const from = this.state.user;
+    const to = this.state.sendTo;
+
+    const pac = { message, from, to };
+
+    request
+      .post(rootURL + 'api/messages/' + this.state.username)
+      .type('form')
+      .send(pac)
+      .set('Accept', 'application/json')
+      .end(function (err, res) {
+        if (err) {
+          console.log(err);
+        }
+      });
+
+    let socket = io.connect(rootURL);
+    // socket.heartbeatTimeout = 60000;
+
+    if (socket !== undefined) {
+      socket.emit('message', pac);
+    }
+
+    const messages = this.state.messages;
+    messages.push(pac);
+    this.setState(messages);
   }
 
   render() {
     const navigation = this.props.navigation;
     return (
-      <View>
-        <Text>Messages with {navigation.state.params.with}</Text>
-
-        <View>
+      <ScrollView
+        ref="scrollView">
+        <View style={styles.page}>
           {this.state.messages &&
             this.state.messages.map((m, i) => {
-              const color = this.state.user === m.from ? 'from' : 'to';
-              const message = (
-                <View
-                  key={i}>
-                  <Text>{m.message}</Text>
+                let color;
+                if (this.state.user === m.from) {
+                  color = styles.from;
+                } else {
+                  color = styles.to;
+                }
+
+                const message = (
+                  <View
+                    style={{ ...color, ...styles.common, }}
+
+                    key={i}>
+                  <Text style={styles.text}>{m.message}</Text>
                 </View>
-              );
-              return message;
-            })
+                );
+                return message;
+              })
           }
         </View>
-          <View>
+        {this.state.messages &&
+          <View style={{ flexDirection: 'row' }}>
           <TextInput
-            ref="message"
+            style={styles.TextInput}
+            onChangeText={(message) => {
+              this.setState({ message });
+            }}
+
+            ref="TextInput"
+            returnKeyType='send'
+            onSubmitEditing={() => {
+              this.sendMessage();
+              this.refs.TextInput.setNativeProps({ text: '' });
+            }}
+
             />
-            <Button title="Send" onPress={this.sendMessage} />
+            <View style={styles.Button}>
+              <Button title="Send" onPress={this.sendMessage} />
+            </View>
           </View>
-      </View>
+        }
+      </ScrollView>
     );
   }
 }
+
+const { width } = Dimensions.get('window');
+const styles = {
+  page: {
+    display: 'flex',
+  },
+  common: {
+    margin: 10,
+    borderRadius: 3,
+    width: width - 160,
+  },
+  from: {
+    backgroundColor: 'rgb(40, 126, 205)',
+    alignSelf: 'flex-end',
+  },
+  to: {
+    backgroundColor: 'rgb(31, 179, 108)',
+  },
+  text: {
+    color: '#fff',
+    fontSize: 16,
+    padding: 5,
+  },
+  TextInput: {
+    flex: 0.75,
+  },
+  Button: {
+    flex: 0.25,
+  },
+};

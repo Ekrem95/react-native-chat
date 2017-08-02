@@ -31,6 +31,26 @@ export default class Nav extends React.Component {
   }
 }
 
+const navOptions = ({ navigation }) => ({
+  title: navigation.state.routeName,
+  headerStyle: {
+    height: 40,
+  },
+  headerTitleStyle: {
+    fontSize: 16,
+  },
+});
+
+const navTitle = ({ navigation }) => ({
+  title: `Messages with ${navigation.state.params.with}`,
+  headerStyle: {
+    height: 40,
+  },
+  headerTitleStyle: {
+    fontSize: 16,
+  },
+});
+
 const Inside = StackNavigator({
   Home: {
     path: 'home/',
@@ -40,7 +60,7 @@ const Inside = StackNavigator({
   Messages: {
     path: 'messages/:name',
     screen: Messages,
-    navigationOptions: navOptions,
+    navigationOptions: navTitle,
   },
 });
 
@@ -48,15 +68,5 @@ const Outside = StackNavigator({
   Login: {
     screen: Login,
     navigationOptions: navOptions,
-  },
-});
-
-const navOptions = ({ navigation }) => ({
-  title: navigation.state.routeName,
-  headerStyle: {
-    height: 40,
-  },
-  headerTitleStyle: {
-    fontSize: 16,
   },
 });

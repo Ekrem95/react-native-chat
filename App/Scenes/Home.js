@@ -68,7 +68,6 @@ export default class Home extends React.Component {
   render() {
     return (
       <View>
-        <Text>Home</Text>
 
          {this.state.users &&
           this.state.users.map(user => {
