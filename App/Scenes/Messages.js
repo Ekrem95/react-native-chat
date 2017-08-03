@@ -51,7 +51,6 @@ export default class Messages extends React.Component {
 
   io() {
     let socket = io.connect(rootURL);
-    // socket.heartbeatTimeout = 60000;
 
     if (socket !== undefined) {
 
@@ -95,7 +94,6 @@ export default class Messages extends React.Component {
       });
 
     let socket = io.connect(rootURL);
-    // socket.heartbeatTimeout = 60000;
 
     if (socket !== undefined) {
       socket.emit('message', pac);
@@ -110,15 +108,19 @@ export default class Messages extends React.Component {
     const navigation = this.props.navigation;
     return (
       <ScrollView
-        ref="scrollView">
+        ref={ref => this.scrollView = ref}
+        onContentSizeChange={(contentWidth, contentHeight)=> {
+        this.scrollView.scrollToEnd({ animated: true });
+      }}
+        >
         <View style={styles.page}>
           {this.state.messages &&
             this.state.messages.map((m, i) => {
                 let color;
                 if (this.state.user === m.from) {
-                  color = styles.from;
-                } else {
                   color = styles.to;
+                } else {
+                  color = styles.from;
                 }
 
                 const message = (
@@ -179,7 +181,7 @@ const styles = {
   text: {
     color: '#fff',
     fontSize: 16,
-    padding: 5,
+    padding: 9,
   },
   TextInput: {
     flex: 0.75,

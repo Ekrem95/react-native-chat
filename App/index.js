@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Nav from './Nav/Nav';
+import Drawer from './Nav/Drawer';
 
 export default class Chat extends Component {
   render() {
     return (
-      <Nav />
+      <Drawer />
     );
   }
 }

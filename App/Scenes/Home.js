@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View, TextInput, Button, Dimensions, TouchableOpacity } from 'react-native';
 import { storage, load, rootURL } from '../helpers';
+import { store } from '../reducers';
 import request from 'superagent';
 
 export default class Home extends React.Component {
@@ -20,6 +21,7 @@ export default class Home extends React.Component {
 
   componentWillMount() {
     this.getUser();
+    // store.dispatch({ type: 'UNAUTH' });
   }
 
   getUser() {
@@ -103,7 +105,7 @@ export default class Home extends React.Component {
                         if (err) console.log(err);
                       });
 
-                    this.props.history.push(`/messages/${user.id}`);
+                    // this.props.history.push(`/messages/${user.id}`);
                   }}
 
                   >{user.username}

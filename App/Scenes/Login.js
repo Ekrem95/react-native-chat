@@ -16,7 +16,7 @@ export default class Login extends React.Component {
   }
 
   componentWillMount() {
-    load();
+    // load();
   }
 
   login() {
