@@ -103,13 +103,14 @@ export default class Messages extends React.Component {
     const messages = this.state.messages;
     messages.push(pac);
     this.setState(messages);
+    this.refs.TextInput.setNativeProps({ text: '' });
   }
 
   render() {
     const navigation = this.props.navigation;
     return (
       <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.91 }}>
+      <View style={{ flex: 9 }}>
       <ScrollView
         style={styles.scrollView}
         ref={ref => this.scrollView = ref}
@@ -142,7 +143,7 @@ export default class Messages extends React.Component {
 
       </ScrollView>
       </View>
-      <View style={{ flex: 0.09 }}>
+      <View style={{ flex: 1.2, justifyContent: 'flex-end' }}>
       {this.state.messages &&
         <View style={styles.inputBox}>
         <TextInput
@@ -155,7 +156,6 @@ export default class Messages extends React.Component {
           returnKeyType='send'
           onSubmitEditing={() => {
             this.sendMessage();
-            this.refs.TextInput.setNativeProps({ text: '' });
           }}
 
           />

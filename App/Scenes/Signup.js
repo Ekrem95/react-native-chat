@@ -79,6 +79,11 @@ export default class Signup extends React.Component {
           this.setState({ username });
         }}
 
+        onSubmitEditing={(event) => {
+          this.refs.email.focus();
+        }}
+
+        returnKeyType='next'
         placeholder="Username"
         style={styles.TextInput}/>
       <TextInput
@@ -86,6 +91,11 @@ export default class Signup extends React.Component {
           this.setState({ email });
         }}
 
+        onSubmitEditing={(event) => {
+          this.refs.password.focus();
+        }}
+
+        ref="email"
         placeholder="Email"
         style={styles.TextInput}/>
         <TextInput
@@ -93,6 +103,12 @@ export default class Signup extends React.Component {
             this.setState({ password });
           }}
 
+          onSubmitEditing={(event) => {
+            this.refs.password2.focus();
+          }}
+
+          ref="password"
+          secureTextEntry={true}
           placeholder="Password"
           style={styles.TextInput}/>
       <TextInput
@@ -100,6 +116,8 @@ export default class Signup extends React.Component {
           this.setState({ password2 });
         }}
 
+        ref="password2"
+        secureTextEntry={true}
         returnKeyType='send'
         onSubmitEditing={() => {
           this.signup();

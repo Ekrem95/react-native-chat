@@ -66,6 +66,11 @@ export default class Login extends React.Component {
           this.setState({ email });
         }}
 
+        onSubmitEditing={(event) => {
+          this.refs.password.focus();
+        }}
+
+        returnKeyType='next'
         placeholder="Email"
         style={styles.TextInput}/>
       <TextInput
@@ -73,6 +78,7 @@ export default class Login extends React.Component {
           this.setState({ password });
         }}
 
+        secureTextEntry={true}
         returnKeyType='send'
         onSubmitEditing={() => {
           this.login();
