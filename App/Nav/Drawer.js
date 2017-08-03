@@ -5,6 +5,7 @@ import Home from '../Scenes/Home';
 import Messages from '../Scenes/Messages';
 import Settings from '../Scenes/Settings';
 import Login from '../Scenes/Login';
+import Search from '../Scenes/Search';
 
 import { store } from '../reducers';
 import { storage } from '../helpers';
@@ -82,9 +83,9 @@ const Inside = StackNavigator({
     screen: Messages,
     navigationOptions: navTitle,
   },
-  Settings: {
-    path: 'settings/',
-    screen: Settings,
+  Search: {
+    path: 'search',
+    screen: Search,
     navigationOptions: navOptions,
   },
 });
@@ -105,9 +106,13 @@ const On = DrawerNavigator({
     path: 'settings/',
     screen: Settings,
   },
-}, { drawerWidth: 200,
-    contentOptions: {},
-  }
+}, {
+  drawerWidth: 200,
+  paths: {
+    Home: 'eko',
+  },
+  contentOptions: {},
+}
 );
 const Off = DrawerNavigator({
   Login: {

@@ -1,5 +1,9 @@
 import React from 'react';
-import { Text, View, TextInput, Button, Dimensions, TouchableOpacity } from 'react-native';
+import {
+  Text, View, TextInput, Button,
+  Dimensions, TouchableOpacity,
+  TouchableHighlight
+  } from 'react-native';
 import { storage, load, rootURL } from '../helpers';
 import { store } from '../reducers';
 import request from 'superagent';
@@ -9,19 +13,16 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       user: null,
-      users: [],
       messages: [],
       searchVal: '',
     };
 
     // this.logout = this.logout.bind(this);
     this.getUser = this.getUser.bind(this);
-    this.search = this.search.bind(this);
   }
 
   componentWillMount() {
     this.getUser();
-    // store.dispatch({ type: 'UNAUTH' });
   }
 
   getUser() {
@@ -52,79 +53,19 @@ export default class Home extends React.Component {
 
   }
 
-  search() {
-    const name = this.state.searchVal;
-
-    if (name.length) {
-      request
-        .get(rootURL + `api/search-users/${name}`)
-        .then(res => {
-          this.setState({ users: res.body });
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
-  }
-
   render() {
+    console.log(this.state);
     return (
       <View>
-
-         {this.state.users &&
-          this.state.users.map(user => {
-            if (user.id !== this.state.userId) {
-              const userInfo = (
-                <TouchableOpacity
-                  key={user.id}
-                  onPress={() => {
-                    this.props.navigation.navigate(
-                      'Messages', {
-                        id: user.id,
-                        name: this.state.user,
-                        with: user.username,
-                      });
-                  }
-                  }>
-
-                <View style={styles.card}>
-                <Text
-                  style={styles.username}
-                  onClick={() => {
-                    const selectedUser = { username: user.username, id: user.id };
-                    const messages = this.state.messages;
-                    messages[selectedUser.username] = selectedUser.id;
-                    this.setState({ messages });
-
-                    request
-                      .post(rootURL + `api/history/${this.state.user}`)
-                      .type('form')
-                      .send({ username: user.username, id: user.id })
-                      .set('Accept', 'application/json')
-                      .end((err) => {
-                        if (err) console.log(err);
-                      });
-
-                    // this.props.history.push(`/messages/${user.id}`);
-                  }}
-
-                  >{user.username}
-                </Text>
-              </View>
-            </TouchableOpacity>
-              );
-              return userInfo;
-            }
-          })
-        }
-
-        <TextInput
-          onChangeText={(searchVal) => {
-            this.setState({ searchVal });
+        <TouchableHighlight
+          underlayColor="pink"
+          onPress={() => {
+            this.props.navigation.navigate('Search', { name: this.state.user });
           }}
+          >
+          <Text>Search</Text>
+        </TouchableHighlight>
 
-         />
-         <Button title="Search" onPress={this.search}/>
 
         {this.state.messages.length > 0 &&
           this.state.messages.map(m => {

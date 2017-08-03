@@ -29,6 +29,7 @@ export default class Messages extends React.Component {
   componentDidUpdate() {
     // if (this.state.sendTo && this.state.user && this.state.messages) {
     this.io();
+
     // }
 
     // const { height } = Dimensions.get('window');
@@ -107,7 +108,10 @@ export default class Messages extends React.Component {
   render() {
     const navigation = this.props.navigation;
     return (
+      <View style={{ flex: 1 }}>
+      <View style={{ flex: 0.91 }}>
       <ScrollView
+        style={styles.scrollView}
         ref={ref => this.scrollView = ref}
         onContentSizeChange={(contentWidth, contentHeight)=> {
         this.scrollView.scrollToEnd({ animated: true });
@@ -135,34 +139,42 @@ export default class Messages extends React.Component {
               })
           }
         </View>
-        {this.state.messages &&
-          <View style={{ flexDirection: 'row' }}>
-          <TextInput
-            style={styles.TextInput}
-            onChangeText={(message) => {
-              this.setState({ message });
-            }}
 
-            ref="TextInput"
-            returnKeyType='send'
-            onSubmitEditing={() => {
-              this.sendMessage();
-              this.refs.TextInput.setNativeProps({ text: '' });
-            }}
-
-            />
-            <View style={styles.Button}>
-              <Button title="Send" onPress={this.sendMessage} />
-            </View>
-          </View>
-        }
       </ScrollView>
+      </View>
+      <View style={{ flex: 0.09 }}>
+      {this.state.messages &&
+        <View style={styles.inputBox}>
+        <TextInput
+          style={styles.TextInput}
+          onChangeText={(message) => {
+            this.setState({ message });
+          }}
+
+          ref="TextInput"
+          returnKeyType='send'
+          onSubmitEditing={() => {
+            this.sendMessage();
+            this.refs.TextInput.setNativeProps({ text: '' });
+          }}
+
+          />
+          <View style={styles.Button}>
+            <Button title="Send" onPress={this.sendMessage} />
+          </View>
+        </View>
+      }
+      </View>
+      </View>
     );
   }
 }
 
 const { width } = Dimensions.get('window');
 const styles = {
+  scrollView: {
+
+  },
   page: {
     display: 'flex',
   },
@@ -188,5 +200,11 @@ const styles = {
   },
   Button: {
     flex: 0.25,
+  },
+  inputBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
   },
 };
