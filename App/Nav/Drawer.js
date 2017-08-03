@@ -1,10 +1,11 @@
 import React from 'react';
-import { DrawerNavigator, StackNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
 
 import Home from '../Scenes/Home';
 import Messages from '../Scenes/Messages';
 import Settings from '../Scenes/Settings';
 import Login from '../Scenes/Login';
+import Signup from '../Scenes/Signup';
 import Search from '../Scenes/Search';
 
 import { store } from '../reducers';
@@ -90,10 +91,15 @@ const Inside = StackNavigator({
   },
 });
 
-const Outside = StackNavigator({
+const Outside = TabNavigator({
   Login: {
     path: 'login/',
     screen: Login,
+    navigationOptions: navOptions,
+  },
+  Signup: {
+    path: 'signup/',
+    screen: Signup,
     navigationOptions: navOptions,
   },
 });

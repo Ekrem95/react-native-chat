@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, Button, View, TextInput, Dimensions } from 'react-native';
+import {
+   Text, Button, View, TextInput,
+   Dimensions, TouchableHighlight } from 'react-native';
 import request from 'superagent';
 import { rootURL, save, load, storage } from '../helpers';
 import { store } from '../reducers';
@@ -15,9 +17,9 @@ export default class Login extends React.Component {
     this.login = this.login.bind(this);
   }
 
-  componentWillMount() {
-    // load();
-  }
+  // componentWillMount() {
+  //   // load();
+  // }
 
   login() {
     if (this.state.email.length > 1 &&
@@ -71,6 +73,11 @@ export default class Login extends React.Component {
           this.setState({ password });
         }}
 
+        returnKeyType='send'
+        onSubmitEditing={() => {
+          this.login();
+        }}
+
         ref="password"
         placeholder="Password"
         style={styles.TextInput}/>
@@ -80,6 +87,15 @@ export default class Login extends React.Component {
         onPress={this.login}
       />
     </View>
+      <TouchableHighlight
+        style={{ marginTop: 20 }}
+        underlayColor="pink"
+        onPress={() => {
+          this.props.navigation.navigate('Signup');
+        }}
+        >
+        <Text>Signup</Text>
+      </TouchableHighlight>
       </View>
     );
   }

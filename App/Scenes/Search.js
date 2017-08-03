@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import { TextInput, View, Text, TouchableOpacity, Dimensions } from 'react-native';
+import { TextInput, View, Text,
+   TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import { rootURL } from '../helpers';
 
 export default class Search extends Component {
@@ -34,7 +35,7 @@ export default class Search extends Component {
   render() {
     console.log(this.state);
     return (
-      <View>
+      <ScrollView>
         <Text>
           Search
         </Text>
@@ -92,7 +93,7 @@ export default class Search extends Component {
             }
           })
         }
-      </View>
+      </ScrollView>
     );
   }
 }
