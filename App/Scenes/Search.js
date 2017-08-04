@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import request from 'superagent';
 import { TextInput, View, Text,
    TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-import { rootURL } from '../helpers';
+import { rootURL } from '../Config/helpers';
 
 export default class Search extends Component {
   constructor(props) {
@@ -24,7 +24,6 @@ export default class Search extends Component {
           this.setState({ users: res.body });
         })
         .catch(err => {
-          console.log('00000000000000000000000000000');
           console.log(err);
         });
     } else {
@@ -54,6 +53,14 @@ export default class Search extends Component {
                 <TouchableOpacity
                   key={user.id}
                   onPress={() => {
+                    request
+                      .post(rootURL + `api/history/${this.user}`)
+                      .type('form')
+                      .send({ username: user.username, id: user.id })
+                      .set('Accept', 'application/json')
+                      .end((err) => {
+                        if (err) console.log(err);
+                      });
                     this.props.navigation.navigate(
                       'Messages', {
                         id: user.id,
@@ -66,24 +73,6 @@ export default class Search extends Component {
                 <View style={styles.card}>
                 <Text
                   style={styles.username}
-                  onClick={() => {
-                    const selectedUser = { username: user.username, id: user.id };
-                    const messages = this.state.messages;
-                    messages[selectedUser.username] = selectedUser.id;
-                    this.setState({ messages });
-
-                    request
-                      .post(rootURL + `api/history/${this.state.user}`)
-                      .type('form')
-                      .send({ username: user.username, id: user.id })
-                      .set('Accept', 'application/json')
-                      .end((err) => {
-                        if (err) console.log(err);
-                      });
-
-                    // this.props.history.push(`/messages/${user.id}`);
-                  }}
-
                   >{user.username}
                 </Text>
               </View>

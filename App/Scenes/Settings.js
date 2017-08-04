@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
-import { storage } from '../helpers';
-import { store } from '../reducers';
+import { storage } from '../Config/helpers';
+import { store } from '../Config/reducer';
 
 export default class Settings extends Component {
   // componentWillMount() {

@@ -3,8 +3,8 @@ import {
   Text, Button, View, TextInput,
    Dimensions, TouchableHighlight } from 'react-native';
 import request from 'superagent';
-import { rootURL, save, load, storage } from '../helpers';
-import { store } from '../reducers';
+import { rootURL, save, load, storage } from '../Config/helpers';
+import { store } from '../Config/reducer';
 
 export default class Signup extends React.Component {
   constructor(props) {
@@ -54,9 +54,9 @@ export default class Signup extends React.Component {
               msg: 'You are signed up and now you can login',
             });
 
-          // let timeout = setTimeout(() => {
-          //   this.props.history.push('/login');
-          // }, 4000);
+          let timeout = setTimeout(() => {
+            this.props.navigation.navigate('Login');
+          }, 3000);
         }
       });
   }
@@ -95,6 +95,7 @@ export default class Signup extends React.Component {
           this.refs.password.focus();
         }}
 
+        returnKeyType='next'
         ref="email"
         placeholder="Email"
         style={styles.TextInput}/>
@@ -109,6 +110,7 @@ export default class Signup extends React.Component {
 
           ref="password"
           secureTextEntry={true}
+          returnKeyType='next'
           placeholder="Password"
           style={styles.TextInput}/>
       <TextInput

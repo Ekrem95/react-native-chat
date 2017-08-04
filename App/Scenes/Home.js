@@ -2,10 +2,10 @@ import React from 'react';
 import {
   Text, View, TextInput, Button,
   Dimensions, TouchableOpacity,
-  TouchableHighlight
+  TouchableHighlight, ScrollView,
   } from 'react-native';
-import { storage, load, rootURL } from '../helpers';
-import { store } from '../reducers';
+import { storage, load, rootURL } from '../Config/helpers';
+import { store } from '../Config/reducer';
 import request from 'superagent';
 
 export default class Home extends React.Component {
@@ -16,8 +16,6 @@ export default class Home extends React.Component {
       messages: [],
       searchVal: '',
     };
-
-    // this.logout = this.logout.bind(this);
     this.getUser = this.getUser.bind(this);
   }
 
@@ -54,16 +52,15 @@ export default class Home extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <View>
+      <ScrollView style ={styles.container}>
         <TouchableHighlight
           underlayColor="pink"
           onPress={() => {
             this.props.navigation.navigate('Search', { name: this.state.user });
           }}
           >
-          <Text>Search</Text>
+          <Text style ={{ color: '#fff' }}>Search</Text>
         </TouchableHighlight>
 
 
@@ -91,13 +88,17 @@ export default class Home extends React.Component {
             return history;
           })
         }
-      </View>
+      </ScrollView>
     );
   }
 }
 
-const { width } = Dimensions;
+const { width } = Dimensions.get('window');
 const styles = {
+  container: {
+    backgroundColor: 'rgb(18, 52, 88)',
+    flex: 1,
+  },
   card: {
     width: width - 20,
     height: 60,
@@ -106,6 +107,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     borderRadius: 3,
+    alignSelf: 'center',
   },
   username: {
     paddingLeft: 20,

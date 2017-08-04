@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Button, TextInput, ScrollView, Dimensions } from 'react-native';
 import request from 'superagent';
 import io from 'socket.io-client';
-import { rootURL } from '../helpers';
+import { rootURL } from '../Config/helpers';
 
 export default class Messages extends React.Component {
   constructor(props) {
@@ -109,10 +109,9 @@ export default class Messages extends React.Component {
   render() {
     const navigation = this.props.navigation;
     return (
-      <View style={{ flex: 1 }}>
+      <View style ={styles.container}>
       <View style={{ flex: 9 }}>
       <ScrollView
-        style={styles.scrollView}
         ref={ref => this.scrollView = ref}
         onContentSizeChange={(contentWidth, contentHeight)=> {
         this.scrollView.scrollToEnd({ animated: true });
@@ -172,8 +171,9 @@ export default class Messages extends React.Component {
 
 const { width } = Dimensions.get('window');
 const styles = {
-  scrollView: {
-
+  container: {
+    backgroundColor: 'rgb(18, 52, 88)',
+    flex: 1,
   },
   page: {
     display: 'flex',

@@ -8,8 +8,8 @@ import Login from '../Scenes/Login';
 import Signup from '../Scenes/Signup';
 import Search from '../Scenes/Search';
 
-import { store } from '../reducers';
-import { storage } from '../helpers';
+import { store } from '../Config/reducer';
+import { storage } from '../Config/helpers';
 
 export default class Drawer extends React.Component {
   constructor(props) {
@@ -57,20 +57,26 @@ const navOptions = ({ navigation }) => ({
   title: navigation.state.routeName,
   headerStyle: {
     height: 40,
+    backgroundColor: 'rgb(21, 141, 228)',
   },
   headerTitleStyle: {
     fontSize: 16,
+    color: '#fff',
   },
+  headerTintColor: 'pink',
 });
 
 const navTitle = ({ navigation }) => ({
   title: `Messages with ${navigation.state.params.with}`,
   headerStyle: {
     height: 40,
+    backgroundColor: 'rgb(21, 141, 228)',
   },
   headerTitleStyle: {
     fontSize: 16,
+    color: '#fff',
   },
+  headerTintColor: 'pink',
 });
 
 const Inside = StackNavigator({
@@ -89,6 +95,11 @@ const Inside = StackNavigator({
     screen: Search,
     navigationOptions: navOptions,
   },
+}, {
+  mode: 'card',
+
+  // mode: 'modal',
+  headerMode: 'float',
 });
 
 const Outside = TabNavigator({

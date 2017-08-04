@@ -3,8 +3,8 @@ import {
    Text, Button, View, TextInput,
    Dimensions, TouchableHighlight } from 'react-native';
 import request from 'superagent';
-import { rootURL, save, load, storage } from '../helpers';
-import { store } from '../reducers';
+import { rootURL, save, load, storage } from '../Config/helpers';
+import { store } from '../Config/reducer';
 
 export default class Login extends React.Component {
   constructor(props) {
