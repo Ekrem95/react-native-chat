@@ -55,12 +55,12 @@ export default class Home extends React.Component {
     return (
       <ScrollView style ={styles.container}>
         <TouchableHighlight
-          underlayColor="pink"
+          underlayColor="rgb(8, 32, 58)"
           onPress={() => {
             this.props.navigation.navigate('Search', { name: this.state.user });
           }}
           >
-          <Text style ={{ color: '#fff' }}>Search</Text>
+          <Text style ={{ color: '#fff', alignSelf: 'center', margin: 20 }}>Search</Text>
         </TouchableHighlight>
 
 
@@ -102,7 +102,7 @@ const styles = {
   card: {
     width: width - 20,
     height: 60,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(18, 42, 68)',
     margin: 8,
     display: 'flex',
     justifyContent: 'center',
@@ -112,5 +112,6 @@ const styles = {
   username: {
     paddingLeft: 20,
     fontSize: 16,
+    color: '#fff',
   },
 };

@@ -1,5 +1,6 @@
 import React from 'react';
-import { DrawerNavigator, StackNavigator, TabNavigator } from 'react-navigation';
+import { DrawerNavigator, StackNavigator, TabNavigator, DrawerItems } from 'react-navigation';
+import { ScrollView } from 'react-native';
 
 import Home from '../Scenes/Home';
 import Messages from '../Scenes/Messages';
@@ -34,16 +35,6 @@ export default class Drawer extends React.Component {
         this.setState({ loggedIn: false });
       }
     });
-
-    // if (store.getState() === 1) {
-    //   this.setState({ loggedIn: true });
-    // } else {
-    //   this.setState({ loggedIn: false });
-    // }
-
-    // let eko = setTimeout(()=> {
-    //   store.dispatch({ type: 'AUTH' });
-    // }, 4000);
   }
 
   render() {
@@ -115,6 +106,14 @@ const Outside = TabNavigator({
   },
 });
 
+function CustomDrawerItems(props) {
+  return (
+      <ScrollView style={{ backgroundColor: 'rgb(18, 52, 88)', flex: 1 }}>
+        <DrawerItems {...props} />
+      </ScrollView>
+  );
+}
+
 const On = DrawerNavigator({
   Home: {
     screen: Inside,
@@ -124,11 +123,18 @@ const On = DrawerNavigator({
     screen: Settings,
   },
 }, {
-  drawerWidth: 200,
+  drawerWidth: 260,
+  contentComponent: CustomDrawerItems,
   paths: {
     Home: 'eko',
   },
-  contentOptions: {},
+  contentOptions: {
+    activeBackgroundColor: 'rgb(18, 42, 78)',
+    style: {},
+    labelStyle: {
+      color: 'white',
+    },
+  },
 }
 );
 const Off = DrawerNavigator({

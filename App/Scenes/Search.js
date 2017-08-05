@@ -32,13 +32,15 @@ export default class Search extends Component {
   }
 
   render() {
-    console.log(this.state);
     return (
-      <ScrollView>
+      <ScrollView style ={styles.container}>
         <Text>
           Search
         </Text>
         <TextInput
+          style={styles.input}
+          placeholder="Search..."
+          placeholderTextColor="rgb(139, 139, 139)"
           onChangeText={(searchVal) => {
             this.setState({ searchVal });
             this.search(searchVal);
@@ -87,12 +89,16 @@ export default class Search extends Component {
   }
 }
 
-const { width } = Dimensions;
+const { width } = Dimensions.get('window');
 const styles = {
+  container: {
+    backgroundColor: 'rgb(8, 32, 58)',
+    flex: 1,
+  },
   card: {
     width: width - 20,
     height: 60,
-    backgroundColor: '#fff',
+    backgroundColor: 'rgb(18, 52, 88)',
     margin: 8,
     display: 'flex',
     justifyContent: 'center',
@@ -101,5 +107,16 @@ const styles = {
   username: {
     paddingLeft: 20,
     fontSize: 16,
+    color: '#fff',
+  },
+  input: {
+    width: width - 20,
+    alignSelf: 'center',
+    backgroundColor: 'rgb(12, 36, 60)',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: 'rgb(0, 67, 122)',
+    color: 'white',
+    padding: 10,
   },
 };
