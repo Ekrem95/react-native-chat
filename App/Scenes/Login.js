@@ -1,7 +1,7 @@
 import React from 'react';
 import {
    Text, Button, View, TextInput,
-   Dimensions, TouchableHighlight } from 'react-native';
+   Dimensions, TouchableHighlight, ScrollView } from 'react-native';
 import request from 'superagent';
 import { rootURL, save, load, storage } from '../Config/helpers';
 import { store } from '../Config/reducer';
@@ -56,6 +56,7 @@ export default class Login extends React.Component {
 
   render() {
     return (
+      <ScrollView>
       <View style={styles.view}>
       <Text style={styles.headerText}>Login</Text>
       {this.state.error &&
@@ -72,6 +73,7 @@ export default class Login extends React.Component {
 
         returnKeyType='next'
         placeholder="Email"
+        placeholderTextColor="rgb(139, 139, 139)"
         style={styles.TextInput}/>
       <TextInput
         onChangeText={(password)=> {
@@ -86,6 +88,7 @@ export default class Login extends React.Component {
 
         ref="password"
         placeholder="Password"
+        placeholderTextColor="rgb(139, 139, 139)"
         style={styles.TextInput}/>
       <View style={styles.button}>
       <Button
@@ -100,9 +103,10 @@ export default class Login extends React.Component {
           this.props.navigation.navigate('Signup');
         }}
         >
-        <Text>Signup</Text>
+        <Text style={{ color: '#eee' }}>Signup</Text>
       </TouchableHighlight>
       </View>
+      </ScrollView>
     );
   }
 }
@@ -113,13 +117,22 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 30,
+    marginBottom: 30,
   },
   headerText: {
     fontSize: 24,
+    color: '#fff',
   },
   TextInput: {
     width: width - 90,
+    color: '#000',
+    backgroundColor: '#fff',
+    borderRadius: 6,
+    padding: 6,
+    margin: 20,
+    borderWidth: 1,
+    borderColor: 'rgb(8, 32, 58)',
   },
   button: {
     marginTop: 20,

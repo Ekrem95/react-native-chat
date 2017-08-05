@@ -1,5 +1,7 @@
 import React from 'react';
-import { Text, View, Button, TextInput, ScrollView, Dimensions } from 'react-native';
+import {
+  Text, View, Button, TextInput,
+  ScrollView, Dimensions, TouchableOpacity } from 'react-native';
 import request from 'superagent';
 import io from 'socket.io-client';
 import { rootURL } from '../Config/helpers';
@@ -142,11 +144,13 @@ export default class Messages extends React.Component {
 
       </ScrollView>
       </View>
-      <View style={{ flex: 1.2, justifyContent: 'flex-end' }}>
+      <View style={{ flex: 1, justifyContent: 'flex-end' }}>
       {this.state.messages &&
         <View style={styles.inputBox}>
         <TextInput
           style={styles.TextInput}
+          placeholder="..."
+          placeholderTextColor="rgb(139, 139, 139)"
           onChangeText={(message) => {
             this.setState({ message });
           }}
@@ -158,8 +162,12 @@ export default class Messages extends React.Component {
           }}
 
           />
-          <View style={styles.Button}>
-            <Button title="Send" onPress={this.sendMessage} />
+          <View style={styles.ButtonContainer}>
+            <TouchableOpacity
+              style={styles.Button}
+              onPress={this.sendMessage}>
+                <Text style={styles.text}>Send</Text>
+              </TouchableOpacity>
           </View>
         </View>
       }
@@ -196,15 +204,28 @@ const styles = {
     padding: 9,
   },
   TextInput: {
-    flex: 0.75,
+    height: 50,
+    width: width / 100 * 75,
+    color: '#fff',
+    paddingLeft: 6,
+    paddingBottom: 6,
+  },
+  ButtonContainer: {
+    height: 30,
+    width: width / 100 * 20,
   },
   Button: {
-    flex: 0.25,
+    backgroundColor: 'rgb(1, 191, 97)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 26,
   },
   inputBox: {
+    flex: 1,
+    width: width,
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-end',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 };
