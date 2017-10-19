@@ -17,11 +17,8 @@ export default class Login extends React.Component {
     this.login = this.login.bind(this);
   }
 
-  // componentWillMount() {
-  //   // load();
-  // }
-
   login() {
+    console.log(this.state);
     if (this.state.email.length > 1 &&
        this.state.password.length > 1) {
 
@@ -42,10 +39,6 @@ export default class Login extends React.Component {
                       Please try again.`,
             });
           } else {
-            // localStorage.setItem('token', res.body.token);
-            // localStorage.setItem('user', res.body.user);
-            // localStorage.setItem('userId', res.body.userId);
-            // this.props.history.push('/');
             this.setState({ error: null });
             save(res.body.user, res.body.userId);
             store.dispatch({ type: 'AUTH' });
@@ -60,7 +53,9 @@ export default class Login extends React.Component {
       <View style={styles.view}>
       <Text style={styles.headerText}>Login</Text>
       {this.state.error &&
-        <Text>{this.state.error}</Text>
+        <Text
+          style={{ color: '#fff' }}
+          >{this.state.error}</Text>
       }
       <TextInput
         onChangeText={(email)=> {

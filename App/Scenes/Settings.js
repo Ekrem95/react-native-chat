@@ -4,10 +4,6 @@ import { storage } from '../Config/helpers';
 import { store } from '../Config/reducer';
 
 export default class Settings extends Component {
-  // componentWillMount() {
-  //   this.props.navigation.navigate('Home');
-  // }
-
   render() {
     return (
       <View>
@@ -16,8 +12,6 @@ export default class Settings extends Component {
           onPress={() => {
             storage.clearMapForKey('user');
             store.dispatch({ type: 'UNAUTH' });
-
-            // this.props.navigation.navigate('Login');
           }}
 
         />

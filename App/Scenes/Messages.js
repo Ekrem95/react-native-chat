@@ -29,13 +29,7 @@ export default class Messages extends React.Component {
   }
 
   componentDidUpdate() {
-    // if (this.state.sendTo && this.state.user && this.state.messages) {
     this.io();
-
-    // }
-
-    // const { height } = Dimensions.get('window');
-    // this.refs.scrollView.scrollTo({ y: height });
   }
 
   getMessages(username) {

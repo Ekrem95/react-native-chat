@@ -20,10 +20,6 @@ export default class Signup extends React.Component {
     this.signup = this.signup.bind(this);
   }
 
-  // componentWillMount() {
-  //   // load();
-  // }
-
   signup() {
     const username = this.state.username;
     const email = this.state.email;
@@ -45,7 +41,6 @@ export default class Signup extends React.Component {
           if (res.body.err.code === 11000) {
             this.setState({ msg: 'This email already taken.' });
           } else {
-            // this.setState({ errors: res.body.err });
             return;
           }
         } else if (res.body.signup === true) {

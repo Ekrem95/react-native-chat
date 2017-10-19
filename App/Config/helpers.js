@@ -11,9 +11,6 @@ export const storage = new Storage({
   defaultExpires: null,
 
   enableCache: true,
-
-  // sync : {
-  // }
 });
 
 export const save = (user, userId) => {
@@ -33,7 +30,6 @@ export const load = () => {
   }).then(user => {
     console.log(user);
   }).catch(err => {
-    // console.warn(err.message);
     switch (err.name) {
     case 'NotFoundError':
       console.log('NotFoundError');
@@ -44,10 +40,3 @@ export const load = () => {
   }
   });
 };
-
-// export const getUser = () => {
-//   storage.load({
-//     key: 'user',
-//     id: '1001',
-//   }).then(user => user).catch(err => err);
-// };
